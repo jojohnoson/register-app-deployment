@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  sonarqube:
+    image: sonarqube:lts
+    container_name: sonarqube_server
+    ports:
+      - "9000:9000"
+    networks:
+      - sonar-net
+    environment:
+      - SONAR_JDBC_USERNAME=sonar
+      - SONAR_JDBC_PASSWORD=sonar_password_secured
+      - SONAR_JDBC_URL=jdbc:postgresql://db:5432/sonar
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    container_name: sonarqube_db
+    networks:
+      - sonar-net
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar_password_secured
+      - POSTGRES_DB=sonar
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+networks:
+  sonar-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
