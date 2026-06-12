@@ -27,18 +27,17 @@
   </build>
 
   <dependencies>
-
     <dependency>
-      <groupId>jakarta.servlet</groupId>
-      <artifactId>jakarta.servlet-api</artifactId>
-      <scope>provided</scope>
+        <groupId>jakarta.servlet</groupId>
+        <artifactId>jakarta.servlet-api</artifactId>
+        <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>jakarta.servlet.jsp</groupId>
-      <artifactId>jakarta.jsp-api</artifactId>
-      <scope>provided</scope>
+        <groupId>jakarta.servlet.jsp</groupId>
+        <artifactId>jakarta.servlet.jsp-api</artifactId>
+        <scope>provided</scope>
     </dependency>
-  </dependencies>
+</dependencies>
 
 </project>
