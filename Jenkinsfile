@@ -66,10 +66,10 @@ pipeline {
    }
    post{
     success{
-        echo "Build and SonarQube Analysis completed successfully."
+        echo "The CI/CD pipeline has completed successfully."
     }
     failure{
-        echo "Build or SonarQube Analysis failed. Please check the logs for details."
+        echo "The CI/CD pipeline has failed."
     }
    }
 }
