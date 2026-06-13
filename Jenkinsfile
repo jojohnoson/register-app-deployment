@@ -97,17 +97,21 @@ pipeline {
         }
         
         stage("Test Docker Container") {
-            steps {
+             steps {
                 script {
-                    sh '''
-                        docker pull ${IMAGE_NAME}:${IMAGE_TAG}
-                        docker run --rm -d -p 8081:8080 --name test-app ${IMAGE_NAME}:${IMAGE_TAG}
-                        sleep 10
-                        curl http://localhost:8081 || true
-                    '''
-                }
-            }
+            sh '''
+                # Remove old container if exists
+                docker rm -f test-app || true
+                
+                # Pull and run new container
+                docker pull ${IMAGE_NAME}:${IMAGE_TAG}
+                docker run -d -p 8081:8080 --name test-app ${IMAGE_NAME}:${IMAGE_TAG}
+                sleep 10
+                curl http://localhost:8081 || true
+            '''
         }
+    }
+}
     }
     
     post{
