@@ -100,7 +100,7 @@ pipeline {
              steps {
                 script {
             sh '''
-                #For Remove old container if exists
+                #Forcler Remove old container if exists
                 docker rm -f test-app || true
                 
                 # Pull and run new container
