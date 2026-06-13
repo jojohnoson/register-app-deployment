@@ -67,6 +67,38 @@ pipeline {
                 }
             }
         }
+        stage("Trivy Image Scan") {
+             steps {
+                script {
+            sh '''
+                docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+                aquasec/trivy:latest image \
+                --no-progress \
+                --scanner=vuln \
+                --exit-code 0 \
+                --severity HIGH,CRITICAL \
+                --format table \
+                ${IMAGE_NAME}:${IMAGE_TAG}
+            '''
+        }
+    }
+}
+        stage("Cleanup Artifacts") {
+            steps {
+                script {
+                   sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+                   sh "docker rmi ${IMAGE_NAME}:latest"
+                }
+            }
+        }
+        stage("Test Docker Container") {
+    steps {
+        sh "docker run --rm -d -p 8081:8080 ${IMAGE_NAME}:${IMAGE_TAG}"
+    }
+}
+       stage("Test Docker Container") {
+    sh "docker run --rm -d -p 8081:8080 ${IMAGE_NAME}:${IMAGE_TAG}"
+}
     }
     
     post{

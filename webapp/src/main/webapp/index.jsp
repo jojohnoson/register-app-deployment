@@ -1,3 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register App</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+</head>
+<body>
+
 <form action="action_page.php">
   <div class="container">
     <h1>New user Register for DevOps Learning at Virtual TechBox Youtube Channel</h1>
@@ -27,12 +36,19 @@
     <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
     <button type="submit" class="registerbtn">Register</button>
   </div>
+  
   <div class="container signin">
     <p>Already have an account? <a href="#">Sign in</a>.</p>
   </div>
 
-   <h1> Thank You </h1>
+   <h1>Thank You</h1>
    <br>
-   <h1> Happy Learning. See You Again. </h1>
+   <h1>Happy Learning. See You Again.</h1>
    
 </form>
+
+<!-- JavaScript file -->
+<script src="${pageContext.request.contextPath}/js/script.js"></script>
+
+</body>
+</html>
