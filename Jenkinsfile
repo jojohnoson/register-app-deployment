@@ -55,15 +55,15 @@ pipeline {
        }
        stage("Build & Push Docker Image") {
     steps {
-        sh 'echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin'
-        
-        sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG -t $IMAGE_NAME:latest .'
-        sh 'docker push $IMAGE_NAME:$IMAGE_TAG'
-        sh 'docker push $IMAGE_NAME:latest'
-        sh 'docker logout'
+        script {
+            docker.withRegistry('', 'dockerhub') {
+                def app = docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
+                app.push()
+                app.push('latest')
+            }
+        }
     }
 }
-   }
    post{
     success{
         echo "The CI/CD pipeline has completed successfully."
