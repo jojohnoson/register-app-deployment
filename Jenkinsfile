@@ -70,20 +70,20 @@ pipeline {
         
         stage("Trivy Image Scan") {
             steps {
-                script {
-                    sh '''
-                        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-                        aquasec/trivy:latest image \
-                        --no-progress \
-                        --scanner=vuln \
-                        --exit-code 0 \
-                        --severity HIGH,CRITICAL \
-                        --format table \
-                        ${IMAGE_NAME}:${IMAGE_TAG}
-                    '''
-                }
-            }
+               script {
+                   sh '''
+                docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+                aquasec/trivy:latest image \
+                --no-progress \
+                --scanners vuln \
+                --exit-code 0 \
+                --severity HIGH,CRITICAL \
+                --format table \
+                ${IMAGE_NAME}:${IMAGE_TAG}
+        '''
         }
+    }
+}
         
         stage("Cleanup Artifacts") {
             steps {
