@@ -8,9 +8,9 @@ pipeline {
         APP_NAME = "register-app"
         RELEASE = "1.0.0"
         DOCKER_USER = "joeljxhnson"
-        DOCKER_PASS = 'dockerhub'
-        IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
-        IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+        DOCKER_PASS = credentials('dockerhub')
+        IMAGE_NAME  = "${DOCKER_USER}/${APP_NAME}"
+        IMAGE_TAG   = "${RELEASE}-${BUILD_NUMBER}"
     }
     stages{
         stage("Cleanup Workspace"){
@@ -55,16 +55,11 @@ pipeline {
        }
        stage("Build & Push Docker Image") {
     steps {
-        script {
-            docker.withRegistry('', DOCKER_PASS) {
-                docker_image = docker.build "${IMAGE_NAME}"
-            }
-
-            docker.withRegistry('', DOCKER_PASS) {
-                docker_image.push("${IMAGE_TAG}")
-                docker_image.push('latest')
-            }
-        }
+        sh "echo '${DOCKER_PASS}' | docker login -u '${DOCKER_USER}' --password-stdin"
+        sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} -t ${IMAGE_NAME}:latest ."
+        sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
+        sh "docker push ${IMAGE_NAME}:latest"
+        sh "docker logout"
     }
 }
    }
