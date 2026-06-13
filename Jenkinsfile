@@ -104,7 +104,6 @@ pipeline {
                         docker run --rm -d -p 8081:8080 --name test-app ${IMAGE_NAME}:${IMAGE_TAG}
                         sleep 10
                         curl http://localhost:8081 || true
-                        docker stop test-app
                     '''
                 }
             }
